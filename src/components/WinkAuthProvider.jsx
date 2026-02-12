@@ -9,13 +9,26 @@ export default function WinkAuthProvider({ children }) {
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
+
+    const clientId = import.meta.env.VITE_WINK_CLIENT_ID;
+    const realm = import.meta.env.VITE_WINK_REALM;
+    const secret = import.meta.env.VITE_WINK_SECRET;
+    const winkBaseUrl = import.meta.env.VITE_WINK_BASE_URL;
+    const winkAuthUrl = import.meta.env.VITE_WINK_AUTH_URL;
+
     const config = {
-      clientId: "__client_id__",
-      realm: "__realm__",
-      secret: "__secret__",
+      clientId,
+      realm,
+      secret,
       loggingEnabled: true,
-      cancelUrl: "http://localhost:3000/callback", // Path of callback URL
-      onAuthErrorFailure: (error) => console.error(error),
+      cancelUrl: `${window.location.origin}/callback`, // Path of callback URL
+      onAuthErrorFailure: (error) =>
+        console.error("Wink auth error:", error),
+      override: true,
+      overrideValues: {
+        BASE_URL: winkBaseUrl,
+        AUTH_URL: winkAuthUrl,
+      },
     };
     const client = getWinkLoginClient(config);
     // eslint-disable-next-line react-hooks/set-state-in-effect

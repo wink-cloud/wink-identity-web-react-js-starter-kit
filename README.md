@@ -42,7 +42,7 @@ within a React environment.
 -   Verification workflow configured
 -   SDK access enabled
 
-Contact Wink Identity support if credentials are required.
+Contact Wink Identity support using the channels listed in the Wink Developer Hub if credentials are required: https://docs.wink.cloud/.
 
 ------------------------------------------------------------------------
 
@@ -66,18 +66,20 @@ cd wink-identity-web-react-js-starter-kit
 npm install
 ```
 
-4.  Update SDK configuration in `.env`
+4.  Update SDK configuration in `.env` (or `.env.local`)
 
 ``` env
-REACT_APP_CLIENT_ID=__client_id__
-REACT_APP_REALM=__realm__
-REACT_APP_SECRET=__secret__
+VITE_WINK_CLIENT_ID=__client_id__
+VITE_WINK_REALM=__realm__
+VITE_WINK_SECRET=__secret__
+VITE_WINK_BASE_URL=https://dev-api.winklogin.com
+VITE_WINK_AUTH_URL=https://devauth.winklogin.com
 ```
 
 5.  Start the development server
 
 ``` bash
-npm start
+npm run dev
 ```
 
 App will run on:
@@ -88,9 +90,20 @@ http://localhost:3000
 
 ## 🔧 Configuration Options
 
-Refer: https://www.npmjs.com/package/wink-identity-sdk
+Refer: https://www.npmjs.com/package/wink-identity-sdk and the Wink Developer Hub:
 
-SDK configuration is initialized inside the verification component.
+-   https://docs.wink.cloud/
+-   https://docs.wink.cloud/docs/front-end-integration
+
+SDK configuration is initialized inside the verification component and uses the following environment variables:
+
+-   `VITE_WINK_CLIENT_ID`
+-   `VITE_WINK_REALM`
+-   `VITE_WINK_SECRET`
+-   `VITE_WINK_BASE_URL`
+-   `VITE_WINK_AUTH_URL`
+
+> **Security note:** In this starter kit, the Wink Login SDK is configured entirely on the frontend so that you can run an end-to-end flow quickly in development. For production integrations, we recommend moving any sensitive Wink session or token handling to your backend and using this configuration only as a reference example.
 
 ------------------------------------------------------------------------
 
@@ -128,6 +141,4 @@ Internal / Partner Use -- Wink Identity
 
 ## 🤝 Support
 
-For integration help, contact:
-
-Wink Identity Engineering Team
+For integration help, contact Wink Identity support using the channels listed in the Wink Developer Hub: https://docs.wink.cloud/.
