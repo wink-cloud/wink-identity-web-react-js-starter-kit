@@ -14,7 +14,8 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 400px;
+  width: 520px;
+  max-width: calc(100vw - 32px);
 }
 
 button {
@@ -31,6 +32,43 @@ button:hover {
   background: #1e40af;
 }
 
-#sdk-container {
-  margin-top: 20px;
+.button-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
+.status-line {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: #374151;
+  font-size: 14px;
+}
+
+.secondary-button {
+  background: #374151;
+}
+
+.secondary-button:hover {
+  background: #1f2937;
+}
+
+.error-message {
+  color: #b91c1c;
+  margin-top: 12px;
+}
+
+.user-profile-card {
+  margin-top: 20px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f9fafb;
+}
+
+.user-profile-title {
+  margin-top: 0;
+}
+

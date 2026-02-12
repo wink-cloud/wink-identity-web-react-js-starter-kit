@@ -103,16 +103,45 @@ SDK configuration is initialized inside the verification component and uses the 
 -   `VITE_WINK_BASE_URL`
 -   `VITE_WINK_AUTH_URL`
 
-> **Security note:** In this starter kit, the Wink Login SDK is configured entirely on the frontend so that you can run an end-to-end flow quickly in development. For production integrations, we recommend moving any sensitive Wink session or token handling to your backend and using this configuration only as a reference example.
+> **Security note:** This starter kit demonstrates a pure frontend integration for onboarding and testing. In production, sensitive operations (such as session creation and profile verification) should be handled by your backend according to your security and compliance requirements.
+
+### Official npm-first integration approach
+
+This starter kit is designed to maximize usage of the `wink-identity-sdk` package as the official integration path:
+
+-   `winkInit()` for SDK initialization and SSO check
+-   `winkLogin()` for authentication
+-   `winkLogout()` / OIDC logout for sign out
+-   `getUser()` for authenticated profile retrieval
+
+No custom direct API calls are required for login and profile retrieval in the app code.  
+For logout hardening, this starter uses standards-based OIDC logout URL redirection.
+
+### User profile demonstration
+
+After successful authentication, the UI displays the profile returned by `getUser()`, including:
+
+-   `firstName`
+-   `lastName`
+-   `email`
+-   `contactNo`
+-   `winkTag`
+-   `winkToken`
+-   `expiryTime`
 
 ------------------------------------------------------------------------
 
 ## 🧪 Testing Flow
 
 1.  Launch the application
-2.  Click **Start Verification**
-3.  Perform face/liveness check
-4.  Receive success response
+2.  Click **Login with Wink**
+3.  Complete the Wink authentication flow
+4.  Confirm the `Status` is `authenticated`
+5.  Confirm the **Authenticated User Profile** panel is rendered in the app
+6.  Click **Refresh Profile** to re-fetch profile data via SDK
+7.  Click **Logout** to clear local session artifacts and profile data
+
+> **Logout behavior note:** Wink supports browser-local SSO. If the token/session is still valid, a new sign-in can be restored quickly after logout. This is expected behavior in OAuth/SSO flows.
 
 ------------------------------------------------------------------------
 
