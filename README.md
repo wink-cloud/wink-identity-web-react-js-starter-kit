@@ -42,7 +42,7 @@ within a React environment.
 -   Verification workflow configured
 -   SDK access enabled
 
-Contact Wink Identity support if credentials are required.
+Contact Wink Identity support using the channels listed in the Wink Developer Hub if credentials are required: https://docs.wink.cloud/.
 
 ------------------------------------------------------------------------
 
@@ -66,18 +66,20 @@ cd wink-identity-web-react-js-starter-kit
 npm install
 ```
 
-4.  Update SDK configuration in `.env`
+4.  Update SDK configuration in `.env` (or `.env.local`)
 
 ``` env
-REACT_APP_CLIENT_ID=__client_id__
-REACT_APP_REALM=__realm__
-REACT_APP_SECRET=__secret__
+VITE_WINK_CLIENT_ID=__client_id__
+VITE_WINK_REALM=__realm__
+VITE_WINK_SECRET=__secret__
+VITE_WINK_BASE_URL=https://dev-api.winklogin.com
+VITE_WINK_AUTH_URL=https://devauth.winklogin.com
 ```
 
 5.  Start the development server
 
 ``` bash
-npm start
+npm run dev
 ```
 
 App will run on:
@@ -88,18 +90,58 @@ http://localhost:3000
 
 ## 🔧 Configuration Options
 
-Refer: https://www.npmjs.com/package/wink-identity-sdk
+Refer: https://www.npmjs.com/package/wink-identity-sdk and the Wink Developer Hub:
 
-SDK configuration is initialized inside the verification component.
+-   https://docs.wink.cloud/
+-   https://docs.wink.cloud/docs/front-end-integration
+
+SDK configuration is initialized inside the verification component and uses the following environment variables:
+
+-   `VITE_WINK_CLIENT_ID`
+-   `VITE_WINK_REALM`
+-   `VITE_WINK_SECRET`
+-   `VITE_WINK_BASE_URL`
+-   `VITE_WINK_AUTH_URL`
+
+> **Security note:** This starter kit demonstrates a pure frontend integration for onboarding and testing. In production, sensitive operations (such as session creation and profile verification) should be handled by your backend according to your security and compliance requirements.
+
+### Official npm-first integration approach
+
+This starter kit is designed to maximize usage of the `wink-identity-sdk` package as the official integration path:
+
+-   `winkInit()` for SDK initialization and SSO check
+-   `winkLogin()` for authentication
+-   `winkLogout()` / OIDC logout for sign out
+-   `getUser()` for authenticated profile retrieval
+
+No custom direct API calls are required for login and profile retrieval in the app code.  
+For logout hardening, this starter uses standards-based OIDC logout URL redirection.
+
+### User profile demonstration
+
+After successful authentication, the UI displays the profile returned by `getUser()`, including:
+
+-   `firstName`
+-   `lastName`
+-   `email`
+-   `contactNo`
+-   `winkTag`
+-   `winkToken`
+-   `expiryTime`
 
 ------------------------------------------------------------------------
 
 ## 🧪 Testing Flow
 
 1.  Launch the application
-2.  Click **Start Verification**
-3.  Perform face/liveness check
-4.  Receive success response
+2.  Click **Login with Wink**
+3.  Complete the Wink authentication flow
+4.  Confirm the `Status` is `authenticated`
+5.  Confirm the **Authenticated User Profile** panel is rendered in the app
+6.  Click **Refresh Profile** to re-fetch profile data via SDK
+7.  Click **Logout** to clear local session artifacts and profile data
+
+> **Logout behavior note:** Wink supports browser-local SSO. If the token/session is still valid, a new sign-in can be restored quickly after logout. This is expected behavior in OAuth/SSO flows.
 
 ------------------------------------------------------------------------
 
@@ -128,6 +170,4 @@ Internal / Partner Use -- Wink Identity
 
 ## 🤝 Support
 
-For integration help, contact:
-
-Wink Identity Engineering Team
+For integration help, contact Wink Identity support using the channels listed in the Wink Developer Hub: https://docs.wink.cloud/.
