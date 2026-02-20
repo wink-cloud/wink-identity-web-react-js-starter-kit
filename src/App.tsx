@@ -1,6 +1,6 @@
 import { useWinkAuth } from "./hooks/useWinkAuth";
 
-function App() {
+const App = () => {
   const {
     winkClient,
     userProfile,
@@ -13,20 +13,7 @@ function App() {
     logout,
   } = useWinkAuth();
 
-  const isBusy =
-    authState === "logging_in" || authState === "logging_out";
-
-  const handleLoginClick = () => {
-    login();
-  };
-
-  const handleLogoutClick = () => {
-    logout();
-  };
-
-  const handleRefreshProfileClick = () => {
-    refreshUserProfile();
-  };
+  const isBusy = authState === "logging_in" || authState === "logging_out";
 
   return (
     <div className="container">
@@ -39,20 +26,20 @@ function App() {
       {!isAuthenticated ? (
         <button
           id="loginBtn"
-          onClick={handleLoginClick}
+          onClick={login}
           disabled={!winkClient || isBusy}
         >
           Login with Wink
         </button>
       ) : (
         <div className="button-row">
-          <button id="logoutBtn" onClick={handleLogoutClick} disabled={isBusy}>
+          <button id="logoutBtn" onClick={logout} disabled={isBusy}>
             Logout
           </button>
           <button
             id="refreshProfileBtn"
             className="secondary-button"
-            onClick={handleRefreshProfileClick}
+            onClick={refreshUserProfile}
             disabled={isBusy}
           >
             Refresh Profile
@@ -101,6 +88,6 @@ function App() {
       ) : null}
     </div>
   );
-}
+};
 
 export default App;
