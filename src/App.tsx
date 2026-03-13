@@ -26,9 +26,17 @@ const App = () => {
       {!isAuthenticated ? (
         <button
           id="loginBtn"
+          className="button wink-oauth-button-light"
           onClick={login}
           disabled={!winkClient || isBusy}
+          aria-label="Login with Wink"
         >
+          <img
+            src="https://cdn.jsdelivr.net/gh/wink-cloud/wink-integration@main/semicolon-red.svg"
+            alt="Wink"
+            width={28}
+            height={28}
+          />
           Login with Wink
         </button>
       ) : (
